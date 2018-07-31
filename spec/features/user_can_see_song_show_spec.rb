@@ -15,4 +15,13 @@ describe 'user sees one song' do
     expect(page).to_not have_content(song_2.title)
     expect(page).to_not have_content(song_2.length)
   end
+
+  it "can see numeric rating for song" do
+    artist = Artist.create(name: 'Journey')
+    song_1 = artist.songs.create(title: "Don't Stop Believing", length: 320, play_count: 390808, rating: 5)
+
+    visit song_path(song_1)
+
+    expect(page).to have_content("Rating: #{song_1.rating}")
+  end
 end
