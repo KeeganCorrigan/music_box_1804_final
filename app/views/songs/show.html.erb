@@ -5,3 +5,7 @@ Rating: <%= @song.rating %>
 <% @song.genres.each do |genre| %>
   <%= genre.name %>
 <% end %>
+
+<% @same_rating.each do |song| %>
+  <%= song.title %>
+<% end %>

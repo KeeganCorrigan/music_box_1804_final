@@ -6,6 +6,7 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find_by(slug: params[:slug])
+    @same_rating = Song.similar_ratings(@song.rating, @song.title)
   end
 
   def new
