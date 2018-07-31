@@ -20,5 +20,23 @@ describe 'visits genre show' do
       expect(page).to have_content(song_2.title)
       expect(page).to_not have_content(song_3.title)
     end
+
+    it 'sees average rating for all songs in this genre' do
+      artist = Artist.create(name: 'Bieber')
+
+      song_1 = artist.songs.create(title: 'this is the song that never ends...', length: 100, play_count: 15, rating: 4)
+      song_2 = artist.songs.create(title: 'this ispoaksdpokopasd', length: 200, play_count: 20, rating: 2)
+
+      genre_1 = Genre.create!(name: "oijoiajsd")
+
+      SongGenre.create!(genre: genre_1, song: song_1)
+      SongGenre.create!(genre: genre_1, song: song_2)
+
+      expected = genre_1.average_rating
+
+      visit genre_path(genre_1)
+
+      expect(page).to have_content("Average rating: #{expected}")
+    end
   end
 end
