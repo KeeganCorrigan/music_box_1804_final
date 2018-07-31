@@ -21,9 +21,9 @@ describe Song, type: :model do
       song_3 = artist.songs.create(title: 'ioajsdoi', length: 200, play_count: 20, rating: 2)
       song_4 = artist.songs.create(title: 'iojasdjoijsd', length: 200, play_count: 20, rating: 2)
 
-      expected = { 2 => [song_4, song_2, song_3], 4 => [song_1] }
+      expected = [song_3, song_4]
 
-      expect(Song.similar_ratings).to eq(expected)
+      expect(Song.similar_ratings(song_2.rating, song_2.title)).to eq(expected)
     end
   end
 end

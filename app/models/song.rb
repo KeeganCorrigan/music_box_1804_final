@@ -18,7 +18,7 @@ class Song < ApplicationRecord
     self.slug = title.parameterize
   end
 
-  def self.similar_ratings
-    all.group_by(&:rating)
+  def self.similar_ratings(rating, name)
+    where(rating: rating).reject { |song| song.title == name }
   end
 end
