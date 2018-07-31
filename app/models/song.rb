@@ -19,6 +19,6 @@ class Song < ApplicationRecord
   end
 
   def self.similar_ratings(rating, name)
-    where(rating: rating).reject { |song| song.title == name }
+    where(rating: rating).take(4).reject { |song| song.title == name }
   end
 end
