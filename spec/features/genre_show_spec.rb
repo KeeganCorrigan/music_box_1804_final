@@ -38,5 +38,27 @@ describe 'visits genre show' do
 
       expect(page).to have_content("Average rating: #{expected}")
     end
+
+    it 'sees name and rating for song with highest rating' do
+      artist = Artist.create(name: 'Bieber')
+
+      song_1 = artist.songs.create(title: 'this is the song that never ends...', length: 100, play_count: 15, rating: 4)
+      song_2 = artist.songs.create(title: 'this ispoaksdpokopasd', length: 200, play_count: 20, rating: 2)
+
+      genre_1 = Genre.create!(name: "oijoiajsd")
+
+      SongGenre.create!(genre: genre_1, song: song_1)
+      SongGenre.create!(genre: genre_1, song: song_2)
+
+      visit genre_path(genre_1)
+
+
+
+      expect(page).to have_content("Highest score: #{song_2.rating}")
+      expect(page).to have_content("Best song: #{expected}")
+      expect(page).to have_content("Lowest score: #{song_1.rating}")
+      expect(page).to have_content("Worst song: #{expected}")
+
+    end
   end
 end

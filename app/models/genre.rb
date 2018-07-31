@@ -7,4 +7,8 @@ class Genre < ApplicationRecord
   def average_rating
     songs.average(:rating)
   end
+
+  def ratings
+    songs.order("rating desc")
+  end
 end
