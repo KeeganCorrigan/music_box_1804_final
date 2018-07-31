@@ -44,6 +44,7 @@ describe 'visits genre show' do
 
       song_1 = artist.songs.create(title: 'this is the song that never ends...', length: 100, play_count: 15, rating: 4)
       song_2 = artist.songs.create(title: 'this ispoaksdpokopasd', length: 200, play_count: 20, rating: 2)
+      song_3 = artist.songs.create(title: 'this ispoaksdpokopasd', length: 200, play_count: 20, rating: 5)
 
       genre_1 = Genre.create!(name: "oijoiajsd")
 
@@ -52,13 +53,10 @@ describe 'visits genre show' do
 
       visit genre_path(genre_1)
 
-
-
-      expect(page).to have_content("Highest score: #{song_2.rating}")
-      expect(page).to have_content("Best song: #{expected}")
-      expect(page).to have_content("Lowest score: #{song_1.rating}")
-      expect(page).to have_content("Worst song: #{expected}")
-
+      expect(page).to have_content("Highest score: #{song_1.rating}")
+      expect(page).to have_content("Best song: #{song_1.title}")
+      expect(page).to have_content("Lowest score: #{song_2.rating}")
+      expect(page).to have_content("Worst song: #{song_2.title}")
     end
   end
 end

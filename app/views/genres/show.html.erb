@@ -5,3 +5,9 @@
 <% end %>
 
 Average rating: <%= @genre.average_rating %>
+
+Highest score: <%= @genre&.ratings&.first&.rating %>
+Best song: <%= @genre&.ratings&.first&.title %>
+
+Lowest score: <%= @genre&.ratings&.last&.rating %>
+Worst song: <%= @genre&.ratings&.last&.title %>
