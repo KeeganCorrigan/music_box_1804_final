@@ -29,15 +29,14 @@ describe 'visits genre index' do
       genre_1 = Genre.create!(name: "oijoiajsd")
       genre_2 = Genre.create!(name: "o09ja09sdj")
 
-      visit new_admin_genre_path
+      visit genres_path
 
       expect(page).to_not have_content("Create Genre")
-      expect(page).to have_content("404")
     end
   end
 
   context "it is an admin" do
-    it "can create a new genre" do
+    it "can create a new genre in genre index page" do
       genre_1 = Genre.create!(name: "oijoiajsd")
       genre_2 = Genre.create!(name: "o09ja09sdj")
       admin = User.create(username: "Dee", password: 'password', role: 1)
@@ -49,20 +48,6 @@ describe 'visits genre index' do
       expect(page).to have_content(genre_1.name)
       expect(page).to have_content(genre_2.name)
 
-      click_on "Create genre"
-
-      expect(current_path).to eq(new_admin_genre_path)
-    end
-
-    it "can fill out a form to create a new genre" do
-      genre_1 = Genre.create!(name: "oijoiajsd")
-      genre_2 = Genre.create!(name: "o09ja09sdj")
-      admin = User.create(username: "Dee", password: 'password', role: 1)
-
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-
-      visit new_admin_genre_path
-
       name = "990jasdjoi"
 
       fill_in :genre_name, with: name
@@ -70,9 +55,29 @@ describe 'visits genre index' do
       click_on "Create Genre"
 
       expect(current_path).to eq(genres_path)
+
+      expect(current_path).to eq(genres_path)
       expect(page).to have_content(genre_1.name)
       expect(page).to have_content(genre_2.name)
       expect(page).to have_content(name)
+      expect(Genre.count).to eq(3)
+    end
+
+    it "can not create a genre with incomplete information" do
+      admin = User.create(username: "Dee", password: 'password', role: 1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit genres_path
+
+      fill_in :genre_name, with: ""
+
+      click_on "Create Genre"
+
+      expect(current_path).to eq(genres_path)
+
+      expect(current_path).to eq(genres_path)
+      expect(Genre.count).to eq(0)
     end
   end
 end
